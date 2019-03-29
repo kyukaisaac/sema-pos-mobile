@@ -15,7 +15,7 @@ class SalesReport extends Component {
 		this.endDate = null;
 	}
 	componentDidMount() {
-		console.log("SalesReport - componentDidMount");
+		console.log(`SalesReport - componentDidMount`);
 		// this.props.reportActions.GetSalesReportData( this.startDate, this.endDate);
 	}
 	render() {
@@ -51,8 +51,8 @@ class SalesReport extends Component {
 					}}>
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={[styles.totalItem, { flex: 1.5 }]}> </Text>
-							<Text style={[styles.totalItem, { flex: .7 }]}>{i18n.t('total-liters')}</Text>
-							<Text style={[styles.totalItem, { flex: .6 }]}>{this.getTotalLiters()}</Text>
+							<Text style={[styles.totalItem, { flex: .7 }]}>{i18n.t('total-volume')}</Text>
+							<Text style={[styles.totalItem, { flex: .6 }]}>{this.getTotalVolume()}</Text>
 							<Text style={[styles.totalItem, { flex: .7 }]}>{i18n.t('total-sales')}</Text>
 							<Text style={[styles.totalItem, { flex: .9 }]}>{Utilities.formatCurrency(this.getTotalSales())}</Text>
 						</View>
@@ -65,6 +65,7 @@ class SalesReport extends Component {
 		}
 	}
 	getSalesData(){
+		console.dir(this.props.salesData.salesItems);
 		if( this.props.dateFilter.hasOwnProperty("startDate") && this.props.dateFilter.hasOwnProperty("endDate") ){
 			if( this.props.dateFilter.startDate == this.startDate && this.props.dateFilter.endDate == this.endDate){
 				return this.props.salesData.salesItems;
@@ -87,25 +88,25 @@ class SalesReport extends Component {
 		}
 	}
 
-	getTotalLiters(){
-		if( this.props.salesData.totalLiters && this.props.salesData.totalLiters !== 'N/A' ){
-			return this.props.salesData.totalLiters.toFixed(2);
+	getTotalVolume(){
+		if( this.props.salesData.totalVolume && this.props.salesData.totalVolume !== 'N/A' ){
+			return this.props.salesData.totalVolume.toFixed(2);
 		}else{
 			return 0;
 		}
 
 	}
 
-	getItemTotalLiters(item) {
-		if( item.totalLiters && item.totalLiters !== 'N/A' ){
-			return `${item.totalLiters.toFixed(2)} L`;
+	getItemTotalVolume(item) {
+		if( item.totalVolume && item.totalVolume !== 'N/A' ){
+			return `${item.totalVolume.toFixed(2)} L`;
 		}
 		return 'N/A';
 	}
 
-	getItemLitersPerSku(item) {
-		if (item.litersPerSku && item.litersPerSku !== 'N/A') {
-			return `${item.litersPerSku} L`;
+	getItemVolumePerSku(item) {
+		if (item.volumePerSku && item.volumePerSku !== 'N/A') {
+			return `${item.volumePerSku} L`;
 		}
 		return 'N/A';
 	}
@@ -121,10 +122,10 @@ class SalesReport extends Component {
 					<Text style={[styles.rowItemCenter]}>{item.quantity}</Text>
 				</View>
 				<View style={[ {flex: .7}]}>
-					<Text style={[styles.rowItemCenter]}>{this.getItemLitersPerSku(item)}</Text>
+					<Text style={[styles.rowItemCenter]}>{this.getItemVolumePerSku(item)}</Text>
 				</View>
 				<View style={[{flex: .7}]}>
-					<Text style={[styles.rowItemCenter]}>{this.getItemTotalLiters(item)}</Text>
+					<Text style={[styles.rowItemCenter]}>{this.getItemTotalVolume(item)}</Text>
 				</View>
 				<View style={[{flex: .7}]}>
 					<Text style={[styles.rowItemCenter]}>{item.pricePerSku.toFixed(2)}</Text>
@@ -145,10 +146,10 @@ class SalesReport extends Component {
 					<Text style={[styles.headerItemCenter]}>{i18n.t('quantity')}</Text>
 				</View>
 				<View style={ [ {flex: .7}]}>
-					<Text style={[styles.headerItemCenter]}>{i18n.t('liters-per-sku')}</Text>
+					<Text style={[styles.headerItemCenter]}>{i18n.t('volume-per-sku')}</Text>
 				</View>
 				<View style={ [{flex: .7}]}>
-					<Text style={[styles.headerItemCenter]}>{i18n.t('total-liters')}</Text>
+					<Text style={[styles.headerItemCenter]}>{i18n.t('total-volume')}</Text>
 				</View>
 				<View style={ [{flex: .7}]}>
 					<Text style={[styles.headerItemCenter]}>{i18n.t('price-per-sku')}</Text>
@@ -168,7 +169,8 @@ class SalesReport extends Component {
 function mapStateToProps(state, props) {
 	return { salesData: state.reportReducer.salesData,
 			 dateFilter: state.reportReducer.dateFilter,
-			 reportType: state.reportReducer.reportType
+			 reportType: state.reportReducer.reportType,
+			 settings: state.settingsReducer.settings
 	};
 }
 

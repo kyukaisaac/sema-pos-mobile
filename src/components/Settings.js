@@ -264,7 +264,7 @@ class Settings extends Component {
 	onSaveSettings() {
 
 		// TODO - Validate fields and set focus to invalid field;
-		this.saveSettings(this.props.settings.token, this.props.settings.siteId);
+		this.saveSettings(this.props.settings.token, this.props.settings.siteId, this.props.settings.unitSystem);
 	};
 
 	enableSaveSettings() {
@@ -359,7 +359,7 @@ ${syncResult.productMrps.remoteProductMrps} ${i18n.t('product-sales-channel-pric
 								} else if (siteId === -2) {
 									message = i18n.t('successful-connection-but', { what: this.site.current.state.propertyText, happened: i18n.t('is-not-active') })
 								} else {
-									this.saveSettings(result.response.token, siteId);
+									this.saveSettings(result.response.token, siteId, result.response.unitSystem);
 									Communications.setToken(result.response.token);
 									Communications.setSiteId(siteId);
 									PosStorage.setTokenExpiration();
@@ -413,7 +413,7 @@ ${syncResult.productMrps.remoteProductMrps} ${i18n.t('product-sales-channel-pric
 		}
 	}
 
-	saveSettings(token, siteId) {
+	saveSettings(token, siteId, unitSystem) {
 		// Check to see if the site has changed
 		let currentSettings = PosStorage.getSettings();
 		if (currentSettings.siteId != siteId) {
@@ -427,7 +427,8 @@ ${syncResult.productMrps.remoteProductMrps} ${i18n.t('product-sales-channel-pric
 			this.password.current.state.propertyText,
 			this.state.selectedLanguage,
 			token,
-			siteId);
+			siteId,
+			unitSystem);
 		this.props.settingsActions.setSettings(PosStorage.getSettings());
 	}
 

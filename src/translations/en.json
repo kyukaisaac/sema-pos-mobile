@@ -90,14 +90,14 @@
 
   "daily-data": "Daily Data",
 
-  "liters-per-sku": "Liters/SKU",
-  "total-liters": "Total Liters",
+  "volume-per-sku": "Volume/SKU",
+  "total-volume": "Total Volume",
   "price-per-sku": "Price/SKU",
   "total-sales": "Total Sales",
 
   "previous": "Previous",
   "current": "Current",
-  "delta-liters": "Delta Liters",
+  "delta-volume": "Delta Volume",
   "delta-inventory": "Delta Inventory",
   "output": "Output",
   "production": "Production",

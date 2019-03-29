@@ -143,7 +143,7 @@ class InventoryReport extends Component {
 						<View style={{ flex: 1, flexDirection: 'row' }}>
 							<Text style={[styles.totalItem, { flex: 1.5 }]}> </Text>
 							<Text style={[styles.totalItem, { flex: .7 }]}>{i18n.t('total-sales')}</Text>
-							<Text style={[styles.totalItem, { flex: 1.0 }]}>{this.getTotalLiters()}</Text>
+							<Text style={[styles.totalItem, { flex: 1.0 }]}>{this.getTotalVolume()}</Text>
 							<Text style={[styles.totalItem, { flex: .8 }]}>{i18n.t('delta-inventory')}</Text>
 							<Text style={[styles.totalItem, { flex: .6 }]}>{this.getTotalInventory()}</Text>
 						</View>
@@ -219,25 +219,25 @@ class InventoryReport extends Component {
 		}
 	}
 
-	getTotalLiters() {
-		if (this.props.inventoryData.salesAndProducts.totalLiters && this.props.inventoryData.salesAndProducts.totalLiters !== 'N/A') {
-			return this.props.inventoryData.salesAndProducts.totalLiters.toFixed(2) + ' L';
+	getTotalVolume() {
+		if (this.props.inventoryData.salesAndProducts.totalVolume && this.props.inventoryData.salesAndProducts.totalVolume !== 'N/A') {
+			return this.props.inventoryData.salesAndProducts.totalVolume.toFixed(2) + ' L';
 		} else {
 			return '-';
 		}
 
 	}
 
-	getItemTotalLiters(item) {
-		if( item.totalLiters && item.totalLiters !== 'N/A' ){
-			return `${item.totalLiters.toFixed(2)} L`;
+	getItemTotalVolume(item) {
+		if( item.totalVolume && item.totalVolume !== 'N/A' ){
+			return `${item.totalVolume.toFixed(2)} L`;
 		}
 		return 'N/A';
 	}
 
-	getItemLitersPerSku(item) {
-		if (item.litersPerSku && item.litersPerSku !== 'N/A') {
-			return `${item.litersPerSku} L`;
+	getItemVolumePerSku(item) {
+		if (item.volumePerSku && item.volumePerSku !== 'N/A') {
+			return `${item.volumePerSku} L`;
 		}
 		return 'N/A';
 	}
@@ -253,10 +253,10 @@ class InventoryReport extends Component {
 					<Text style={[styles.rowItemCenter]}>{item.quantity}</Text>
 				</View>
 				<View style={[{ flex: .7 }]}>
-					<Text style={[styles.rowItemCenter]}>{this.getItemLitersPerSku(item)}</Text>
+					<Text style={[styles.rowItemCenter]}>{this.getItemVolumePerSku(item)}</Text>
 				</View>
 				<View style={[{ flex: .7 }]}>
-					<Text style={[styles.rowItemCenter]}>{this.getItemTotalLiters(item)}</Text>
+					<Text style={[styles.rowItemCenter]}>{this.getItemTotalVolume(item)}</Text>
 				</View>
 				<View style ={[{width:20}]}/>
 
@@ -323,10 +323,10 @@ class InventoryReport extends Component {
 					<Text style={[styles.headerItemCenter]}>{i18n.t('quantity')}</Text>
 				</View>
 				<View style={[{ flex: .7 }]}>
-					<Text style={[styles.headerItemCenter]}>{i18n.t('liters-per-sku')}</Text>
+					<Text style={[styles.headerItemCenter]}>{i18n.t('volume-per-sku')}</Text>
 				</View>
 				<View style={[{ flex: .7 }]}>
-					<Text style={[styles.headerItemCenter]}>{i18n.t('total-liters')}</Text>
+					<Text style={[styles.headerItemCenter]}>{i18n.t('total-volume')}</Text>
 				</View>
 				<View style ={[{width:20}]}/>
 				<View style={[{ flex: .7 }]}>
@@ -336,7 +336,7 @@ class InventoryReport extends Component {
 					<Text style={[styles.headerItemCenter]}>{i18n.t('current')}</Text>
 				</View>
 				<View style={[{ flex: .7 }]}>
-					<Text style={[styles.headerItemCenter]}>{i18n.t('delta-liters')}</Text>
+					<Text style={[styles.headerItemCenter]}>{i18n.t('delta-volume')}</Text>
 				</View>
 			</View>
 		);
@@ -373,12 +373,12 @@ class InventoryReport extends Component {
 	}
 
 	getTotalForSkuDisplay( item ) {
-		if (!item.litersPerSku || item.litersPerSku === 'N/A') return '-';
+		if (!item.volumePerSku || item.volumePerSku === 'N/A') return '-';
 		let current = this.getInventorySkuForDisplay(true, item);
 		if (current == '-') return '-';
 		let previous = this.getInventorySkuForDisplay(false, item);
 		if (previous == '-') return '-';
-		return `${((current - previous) * item.litersPerSku).toFixed(2)} L`;
+		return `${((current - previous) * item.volumePerSku).toFixed(2)} L`;
 	}
 
 	getTotalInventory(){
@@ -406,7 +406,7 @@ class InventoryReport extends Component {
 	getOutput(){
 		let sales = 0;
 		let inventory = 0;
-		let totalSales = this.getTotalLiters();
+		let totalSales = this.getTotalVolume();
 		let getTotalInventory = this.getTotalInventory();
 		if(totalSales == '-' && getTotalInventory == '-' ){
 			return '-';

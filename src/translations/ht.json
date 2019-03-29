@@ -90,14 +90,14 @@
 
   "daily-data": "Done Jounalye",
 
-  "liters-per-sku": "Lit/SKU",
-  "total-liters": "Total Lit",
+  "volume-per-sku": "Volim/SKU",
+  "total-volume": "Volim Total",
   "price-per-sku": "Pri/SKU",
   "total-sales": "Total Vant",
 
   "previous": "Avan",
   "current": "Kounya",
-  "delta-liters": "Delta Lit",
+  "delta-volume": "Delta Volim",
   "delta-inventory": "Delta Envantè",
   "output": "Sòti",
   "production": "Prodiksyon",

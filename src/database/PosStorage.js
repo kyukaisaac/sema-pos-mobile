@@ -72,7 +72,7 @@ class PosStorage {
 		this.lastProductsSync = firstSyncDate;
 		this.tokenExpiration = firstSyncDate;
 
-		this.settings = { semaUrl: "", site: "", user: "", password: "", uiLanguage: {}, token: "", siteId: "" };
+		this.settings = { semaUrl: "", site: "", user: "", password: "", uiLanguage: {}, token: "", siteId: "", unitSystem: ""};
 		this.salesChannels = [];
 		this.customerTypes = [];
 		this.receipts = [];
@@ -750,8 +750,8 @@ class PosStorage {
 		});
 	}
 
-	saveSettings(url, site, user, password, uiLanguage, token, siteId) {
-		let settings = { semaUrl: url, site, user, password, uiLanguage, token, siteId };
+	saveSettings(url, site, user, password, uiLanguage, token, siteId, unitSystem) {
+		let settings = { semaUrl: url, site, user, password, uiLanguage, token, siteId, unitSystem };
 		this.settings = settings;
 		this.setKey(settingsKey, this.stringify(settings));
 

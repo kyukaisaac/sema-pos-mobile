@@ -83,7 +83,7 @@ const getSalesData = (beginDate, endDate) =>{
 		}, []);
 
 		if (!allReceiptLineItems.length) {
-			return resolve({totalLiters: 0, totalSales: 0, salesItems:[]})
+			return resolve({totalVolume: 0, totalSales: 0, salesItems:[]})
 		}
 
 		const finalData = allReceiptLineItems.reduce((final, lineItem) => {
@@ -98,8 +98,8 @@ const getSalesData = (beginDate, endDate) =>{
 					quantity: Number(lineItem.quantity),
 					pricePerSku: parseFloat(lineItem.price_total) / Number(lineItem.quantity),
 					totalSales: parseFloat(lineItem.price_total),
-					litersPerSku: Number(lineItem.product.unitPerProduct),
-					totalLiters: Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity),
+					volumePerSku: Number(lineItem.product.unitPerProduct),
+					totalVolume: Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity),
 					isNew: true
 				};
 
@@ -111,16 +111,16 @@ const getSalesData = (beginDate, endDate) =>{
 			} else {
 				product.quantity += Number(lineItem.quantity);
 				product.totalSales += parseFloat(lineItem.price_total);
-				product.totalLiters += Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity);
+				product.totalVolume += Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity);
 
 				final.salesItems[productIndex] = product;
 			}
 
-			final.totalLiters += Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity);
+			final.totalVolume += Number(lineItem.product.unitPerProduct) * Number(lineItem.quantity);
 			final.totalSales += parseFloat(lineItem.price_total);
 
 			return final;
-		}, {totalLiters: 0, totalSales: 0, salesItems: [], mapping: new Map()});
+		}, {totalVolume: 0, totalSales: 0, salesItems: [], mapping: new Map()});
 
 		finalData.mapping.clear();
 		delete finalData.mapping;
@@ -175,8 +175,8 @@ const createInventory = (salesData, inventorySettings, products ) =>{
 					description:products[index].description,
 					quantity: 0,
 					totalSales: 0,
-					totalLiters:0,
-					litersPerSku:products[index].unitPerProduct
+					totalVolume:0,
+					volumePerSku:products[index].unitPerProduct
 				});
 		}
 	}
@@ -226,7 +226,7 @@ const initializeInventory = () =>{
 	return {date:null, currentMeter:null, currentProductSkus:[], previousMeter:null, previousProductSkus:[]}
 }
 export const initializeSalesData = () => {
-	return {totalLiters: null, totalSales: null, salesItems:[]};
+	return {totalVolume: null, totalSales: null, salesItems:[]};
 };
 export const initializeInventoryData = () =>{
 	return {salesAndProducts:initializeSalesData(), inventory:initializeInventory()}
